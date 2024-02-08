@@ -1,41 +1,54 @@
 //types
 typedef struct {
-  char mode;
-  float V;
-  float R;
-  float TSR;
-  float theta;
- }MyValues;
+  float a;
+  float f;
+  float ph;
+}MyValues;
+
+typedef struct {
+  float p;
+  float i;
+  float d;
+}PIDParams;
 
 //Model variables
 MyValues values;
+PIDParams pidC;
 //system variables
-float W;
-bool FixedMode = false;
-const char *ssid = "hemiche";
+const char *ssid = "motor controler";
 const char *password = "12345678";
-WebServer server(80);
-const int led = 13;
+WebServer server(80); //init server using http protocol
 int counter=0;
 ESP32Timer ITimer1(1);
 //functions
+//setups
+void setupPins();
+void setupInterrupt();
+void setupRoutes();
+void setupStepper();
+void setupPID();
+void setupWifi();
+void setupMDNS();
 //root functions
 void handleRoot();
 void handleNotFound(); 
 void handleNotFound2(); 
+
 String navigateTo(String path);
 String homePage();
-void handleGetHome();
-void handlePostHome();
+String controlePage();
+void handleGetController();
+void handleSetController();
+void handleSetParams();
 //memory functions
-void writeDataToEEPROM(float V,float R,float TSR,float theta);
-MyValues readDataFromEEPROM();
+void writeDataToParamsEEPROM(float a,float f, float ph);
+void writeDataToContorleEEPROM( float p, float i, float d);
+void readDataFromEEPROM();
 //timers functions
 void IRAM_ATTR onChangePosition();
-bool IRAM_ATTR movementInterruption(void * timerNo);
 // bool IRAM_ATTR TimerHandler1(void * timerNo)
 //model functions
-float angle(float theta,float TSR);
+float angle(float t);
 int angleToPosition(float angle);
 bool moveToPosition(int pos);
 void dispatch();
