@@ -22,7 +22,7 @@ void setup(void) {
   Serial.println("HTTP server started");
 // init values and Params from EEPROM
   readDataFromEEPROM(); 
-  dispatch();
+ // dispatch();
 }
 
 
@@ -35,7 +35,7 @@ void setupPins(){
   pinMode(ch1,INPUT);
   pinMode(ch2,INPUT);
   //GPIO init
-  digitalWrite(ENABLE_PIN, LOW);
+  digitalWrite(ENABLE_PIN, HIGH);
   digitalWrite(POWER_PIN, HIGH);
   digitalWrite(DIR_PIN, LOW);
 }

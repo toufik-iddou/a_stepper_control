@@ -51,6 +51,14 @@ String controlePage(){
         border-radius: 5px;\
         cursor: pointer;\
     }\
+    #function-inputs > .input{\
+    width: 100%;\
+    height: 70%;\
+    justify-content: center;\
+}\
+#function-inputs > .input >input{\
+width: 80%;\
+}\
     </style>\
 </head>\
 <body>\
@@ -61,21 +69,11 @@ String controlePage(){
         </div>\
         <div class='inputs'>  \
     <div id='function-inputs' class='inputs-section'>\
-        <h2>Asin(wt+φ)</h2>\
+        <h2>Signal</h2>\
         <div class='input'>\
-            <h3>Amplitude</h3>\
+            <h3>Position</h3>\
             <input type='range' id='a-range'  min='0' max='100' value='"+String(values.a)+"' step='0.01' onchange='updateValue(this.value,`range`,`a`);'>\
             <input type='number' step='0.01' id='a-number' name='a' value='"+String(values.a)+"'  onchange='updateValue(this.value,`number`,`a`);'>\
-        </div>\
-        <div class='input'>\
-            <h3>Frequency</h3>\
-            <input type='range' id='f-range'  min='0' max='2' value='"+String(values.f)+"' step='0.01' onchange='updateValue(this.value,`range`,`f`);'>\
-            <input type='number' step='0.01' id='f-number' name='f' value='"+String(values.f)+"'  onchange='updateValue(this.value,`number`,`f`);'>\
-        </div>\
-        <div class='input'>\
-            <h3>Phase</h3>\
-            <input type='range' id='ph-range'  min='0' max='360' value='"+String(values.ph)+"'  step='0.01' onchange='updateValue(this.value,`range`,`ph`);'>\
-            <input type='number' step='0.01' id='ph-number' name='ph' value='"+String(values.ph)+"'  onchange='updateValue(this.value,`number`,`ph`);'>\
         </div>\
     </div>\
     <div id='pid-inputs' class='inputs-section'>\
@@ -95,7 +93,7 @@ String controlePage(){
         <input type='range' id='d-range'  min='0' max='5'  value='"+String(pidC.d)+"' step='0.01' onchange='updateValue(this.value,`range`,`d`);'>\
         <input type='number' step='0.01' id='d-number' name='d' value='"+String(pidC.d)+"'  onchange='updateValue(this.value,`number`,`d`);'>\
     </div>  \
-    <input type='submit' value='start'>\
+ <input type='submit' value='start'>\
 </div>\
     </div>\
 </div>\
@@ -111,17 +109,15 @@ String controlePage(){
             document.getElementById(inputClass+'-range').value=val;\
         break;       \
     }\
-    if(['a','f','ph'].includes(inputClass)){\
     sendUpdateRequest();\
-    }\
   }\
   function sendUpdateRequest() {\
     const p =document.getElementById('p-range').value;\
     const i =document.getElementById('i-range').value;\
     const d =document.getElementById('d-range').value;\
     const a =document.getElementById('a-range').value;\
-    const f =document.getElementById('f-range').value;\
-    const ph =document.getElementById('ph-range').value;\
+    const f =0;\
+    const ph =0;\
     fetch('http://192.168.4.1/params', {\
         method: 'POST',\
         headers: {\

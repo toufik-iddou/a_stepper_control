@@ -8,6 +8,7 @@ void IRAM_ATTR onChangePosition() {
 }
 float angle(float t){
   float alpha = values.a*sin(t*2*PI*values.f+values.ph*DEG2RAD);
+  
   return alpha ;
   }
   
@@ -19,7 +20,9 @@ void dispatch(){
 }
 
 void moveStepper(double output) {
-  digitalWrite(ENABLE_PIN, HIGH);
+      if(!(!response && pidC.i==0 && pidC.d ==0)){
+      response=false;
+  digitalWrite(ENABLE_PIN, LOW);
   // Move the stepper motor based on the PID output
   stepper.move(output);
   // Enable the motor and run to the target position
@@ -28,5 +31,6 @@ void moveStepper(double output) {
   }
   // Disable the motor when not in use
   stepper.disableOutputs();
-  digitalWrite(ENABLE_PIN, LOW);
+      }
 }
+

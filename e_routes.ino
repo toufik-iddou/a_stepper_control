@@ -40,11 +40,11 @@ void handleGetController() {
 }
 
 void handleSetController() {
-
+  response=true;
   pidC.p = server.arg("p").toFloat();
   pidC.i = server.arg("i").toFloat();
   pidC.d = server.arg("d").toFloat();
-
+  
   writeDataToContorleEEPROM(pidC.p,pidC.i,pidC.d);
   dispatch();
   server.send(200, "text/html", navigateTo("http://192.168.4.1/controller"));
@@ -52,6 +52,7 @@ void handleSetController() {
 }
 
 void handleSetParams() {
+  response=true;
   StaticJsonDocument<200> doc;
   DeserializationError error = deserializeJson(doc, server.arg("plain"));
   if (error) {
@@ -61,7 +62,12 @@ void handleSetParams() {
   values.a =doc["a"];
   values.f =doc["f"];
   values.ph =doc["ph"];
+  pidC.p =doc["p"];
+  pidC.i =doc["i"];
+  pidC.d =doc["d"];
   writeDataToParamsEEPROM(values.a,values.f,values.ph);
+  writeDataToContorleEEPROM(pidC.p,pidC.i,pidC.d);
+  dispatch();
   server.send(200, "text/plain", "data sent");
 }
 
