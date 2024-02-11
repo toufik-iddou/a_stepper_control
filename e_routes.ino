@@ -40,7 +40,7 @@ void handleGetController() {
 }
 
 void handleSetController() {
-  response=true;
+
   pidC.p = server.arg("p").toFloat();
   pidC.i = server.arg("i").toFloat();
   pidC.d = server.arg("d").toFloat();
@@ -52,7 +52,7 @@ void handleSetController() {
 }
 
 void handleSetParams() {
-  response=true;
+
   StaticJsonDocument<200> doc;
   DeserializationError error = deserializeJson(doc, server.arg("plain"));
   if (error) {

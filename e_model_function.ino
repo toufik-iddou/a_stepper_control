@@ -20,8 +20,7 @@ void dispatch(){
 }
 
 void moveStepper(double output) {
-      if(!(!response && pidC.i==0 && pidC.d ==0)){
-      response=false;
+
   digitalWrite(ENABLE_PIN, LOW);
   // Move the stepper motor based on the PID output
   stepper.move(output);
@@ -31,6 +30,6 @@ void moveStepper(double output) {
   }
   // Disable the motor when not in use
   stepper.disableOutputs();
-      }
+      
 }
 
